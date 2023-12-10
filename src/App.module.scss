@@ -1,0 +1,188 @@
+@use "./styles/variables";
+@use "./styles/breakpoints";
+
+.error--label {
+    color: variables.$light-red !important;
+}
+
+.error--input {
+    outline: 1px solid variables.$light-red !important;
+}
+
+.container {
+    min-height: 100vh;
+    padding: 8.8rem 1.6rem 0 1.6rem;
+    background: variables.$light-grey;
+
+    .card {
+        padding: 4.8rem 2.4rem;
+        background: variables.$white;
+        border-radius: 2.4rem 2.4rem 10rem 2.4rem;
+
+        &__input {
+            gap: 1.6rem;
+            display: flex;
+
+            &--error {
+                line-height: 1.5;
+                font-size: 1.4rem;
+                margin-top: 0.8rem;
+                display: inline-block;
+                color: variables.$light-red;
+                font-family: "Poppins-Italic";
+            }
+
+            div {
+                span {
+                    &:first-child {
+                        line-height: 1.5;
+                        font-size: 1.2rem;
+                        letter-spacing: 3px;
+                        margin-bottom: 0.4rem;
+                        display: inline-block;
+                        text-transform: uppercase;
+                        color: variables.$smokey-grey;
+                    }
+                }
+
+                input {
+                    width: 100%;
+                    border: none;
+                    height: 5.4rem;
+                    font-size: 2rem;
+                    line-height: normal;
+                    border-radius: 0.8rem;
+                    letter-spacing: 0.2px;
+                    padding: 1.2rem 1.6rem;
+                    font-family: "Poppins-Bold";
+                    color: variables.$off-black;
+                    outline: 1px solid variables.$light-grey;
+
+                    &:focus {
+                        outline: 1px solid variables.$purple;
+                    }
+                }
+            }
+        }
+
+        &__button {
+            display: flex;
+            margin: 3.2rem 0;
+            position: relative;
+            justify-content: center;
+
+            &::before {
+                left: 0;
+                right: 0;
+                top: 50%;
+                content: '';
+                height: 1px;
+                position: absolute;
+                transform: translateY(-50%);
+                background: variables.$light-grey;
+            }
+
+            img {
+                z-index: 1;
+                padding: 2rem;
+                width: 6.4rem;
+                height: 6.4rem;
+                cursor: pointer;
+                border-radius: 100%;
+                background: variables.$purple;
+
+                &:hover {
+                    background: variables.$off-black;
+                }
+            }
+        }
+
+        &__result {
+            div {
+                gap: 0.8rem;
+                font-size: 5.6rem;
+                line-height: 110%;
+                display: inline-flex;
+                letter-spacing: -1.12px;
+                font-family: "Poppins-ExtraBoldItalic";
+            }
+
+            &--value {
+                color: variables.$purple;
+            }
+        }
+    }
+}
+
+@include breakpoints.mq(tablet) {
+    .container {
+        display: flex;
+        padding: 0 6rem;
+        align-items: center;
+        justify-content: center;
+
+        .card {
+            &__result {
+                gap: 2rem;
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+    }
+}
+
+@include breakpoints.mq(desktop) {
+    .container {
+        padding: 0;
+        display: flex;
+
+        .card {
+            width: 84rem;
+            padding: 5.6rem;
+            border-bottom-right-radius: 20rem;
+
+            &__input {
+                gap: 3.2rem;
+                max-width: 54.4rem;
+
+                div {
+                    span {
+                        &:first-child {
+                            line-height: 1.1;
+                            font-size: 1.4rem;
+                            margin-bottom: 0.8rem;
+                            letter-spacing: 3.5px;
+                        }
+                    }
+
+                    input {
+                        width: 16rem;
+                        height: 7.2rem;
+                        font-size: 3.2rem;
+                        padding: 1.2rem 2.4rem;
+                    }
+                }
+            }
+
+            &__button {
+                margin: 0;
+                justify-content: flex-end;
+
+                img {
+                    padding: 2.5rem;
+                    width: 9.6rem;
+                    height: 9.6rem;
+                }
+            }
+
+            &__result {
+                gap: 0;
+                flex-direction: column;
+
+                div {
+                    font-size: 10.4rem;
+                }
+            }
+        }
+    }
+}
