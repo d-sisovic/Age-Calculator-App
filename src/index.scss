@@ -1,0 +1,8 @@
+@use "./styles/fonts";
+@use "./styles/reset";
+@use "./styles/variables";
+@use "./styles/breakpoints";
+
+body {
+    font-family: "Poppins-Regular";
+}
