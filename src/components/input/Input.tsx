@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ChangeEvent } from 'react';
 import styles from './Input.module.scss';
 import appStyles from '../../App.module.scss';
@@ -19,3 +20,12 @@ const Input = ({ label, placeholder, haveError, errorText, children, inputChange
 };
 
 export default Input;
+
+Input.propTypes = {
+    children: PropTypes.node,
+    label: PropTypes.string.isRequired,
+    haveError: PropTypes.bool.isRequired,
+    errorText: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    inputChangeEvent: PropTypes.func.isRequired
+};

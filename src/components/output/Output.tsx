@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './Output.module.scss';
 import CountingNumber from "../../CountingNumber";
 import { IOutputProps } from "./ts/models/output-props.model";
@@ -13,3 +14,9 @@ const Output = ({ label, showAgeResult, value }: IOutputProps) => {
 };
 
 export default Output;
+
+Output.propTypes = {
+    value: PropTypes.number,
+    label: PropTypes.string,
+    showAgeResult: PropTypes.bool
+};
