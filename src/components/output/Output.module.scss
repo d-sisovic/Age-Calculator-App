@@ -1,0 +1,21 @@
+@use "../../styles/variables";
+@use "../../styles/breakpoints";
+
+.container {
+    gap: 0.8rem;
+    font-size: 5.6rem;
+    line-height: 110%;
+    display: inline-flex;
+    letter-spacing: -1.12px;
+    font-family: "Poppins-ExtraBoldItalic";
+
+    .value {
+        color: variables.$purple;
+    }
+}
+
+@include breakpoints.mq(desktop) {
+    .container {
+        font-size: 10.4rem;
+    }
+}

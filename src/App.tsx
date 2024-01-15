@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import styles from './App.module.scss';
-import CountingNumber from './CountingNumber';
-import { IAgeState } from './ts/age-state.model';
+import Input from './components/input/Input';
+import Output from './components/output/Output';
 import circle from './assets/images/icon-arrow.svg';
-import { IInputState } from './ts/input-state.model';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ValueKey } from './ts/types/value-key.type';
+import { IAgeState } from './ts/models/age-state.model';
+import { IInputState } from './ts/models/input-state.model';
 
 const initialInputState = {
   submitted: false,
@@ -34,12 +36,10 @@ const calculateAge = (day: number, month: number, year: number): IAgeState => {
 };
 
 const App = () => {
-  const dayRef = useRef(null);
-  const yearRef = useRef(null);
-  const monthRef = useRef(null);
-
   const [inputState, setInputState] = useState<IInputState>(initialInputState);
   const haveError = inputState.invalidDate || (inputState.submitted && (inputState.day.error || inputState.month.error || inputState.year.error));
+
+  const showAgeResult = !haveError && inputState.submitted;
 
   const onSubmitDate = () => {
     const { day, month, year } = inputState;
@@ -53,8 +53,7 @@ const App = () => {
     setInputState(previous => ({ ...previous, submitted: true, invalidDate: !isValidDay, age }));
   };
 
-  const onInputChange = (event: ChangeEvent<HTMLInputElement>, key: 'day' | 'month' | 'year') => {
-    const { value } = event.target;
+  const onInputChange = (value: string, key: ValueKey) => {
     const parsedValue = Number.parseInt(value);
     const invalidParsedValue = Number.isNaN(parsedValue);
     const requiredError = value.trim() === '' ? 'This field is required' : invalidParsedValue ? 'This field must have valid value' : '';
@@ -81,40 +80,22 @@ const App = () => {
     }
   };
 
-  const showAgeResult = !haveError && inputState.submitted;
-  const showBlankResult = haveError || !inputState.submitted;
-
   return (
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles['card__input']}>
-          <div>
-            <span className={haveError ? styles['error--label'] : ''}>Day</span>
+          <Input label='Day' placeholder='DD'
+            haveError={!!haveError} errorText={inputState.day.error} inputChangeEvent={value => onInputChange(value, 'day')} >
+            {inputState.invalidDate && <span className={styles['error--input-text']}>Must be a valid date</span>}
+          </Input>
 
-            <input type="text" placeholder="DD" ref={dayRef} data-testid="input"
-              className={haveError ? styles['error--input'] : ''} onChange={event => onInputChange(event, 'day')} />
+          <Input label='Month' placeholder='MM'
+            haveError={!!haveError} errorText={inputState.month.error} inputChangeEvent={value => onInputChange(value, 'month')} >
+          </Input>
 
-            {haveError && <span className={styles['card__input--error']}>{inputState.day.error}</span>}
-            {inputState.invalidDate && <span className={styles['card__input--error']}>Must be a valid date</span>}
-          </div>
-
-          <div>
-            <span className={haveError ? styles['error--label'] : ''}>Month</span>
-
-            <input type="text" placeholder="MM" ref={monthRef} data-testid="input"
-              className={haveError ? styles['error--input'] : ''} onChange={event => onInputChange(event, 'month')} />
-
-            {haveError && <span className={styles['card__input--error']}>{inputState.month.error}</span>}
-          </div>
-
-          <div>
-            <span className={haveError ? styles['error--label'] : ''}>Year</span>
-
-            <input type="text" placeholder="YYYY" ref={yearRef} data-testid="input"
-              className={haveError ? styles['error--input'] : ''} onChange={event => onInputChange(event, 'year')} />
-
-            {haveError && <span className={styles['card__input--error']}>{inputState.year.error}</span>}
-          </div>
+          <Input label='Year' placeholder='YYYY'
+            haveError={!!haveError} errorText={inputState.year.error} inputChangeEvent={value => onInputChange(value, 'year')} >
+          </Input>
         </div>
 
         <div className={styles['card__button']} onClick={onSubmitDate} data-testid="submit">
@@ -122,29 +103,11 @@ const App = () => {
         </div>
 
         <div className={styles['card__result']}>
-          <div>
-            <span className={styles['card__result--value']} data-testid="result">
-              {showBlankResult && '--'}
-              {showAgeResult && <CountingNumber endValue={inputState.age.years} />}
-            </span>
-            <span>years</span>
-          </div>
+          <Output label='years' showAgeResult={showAgeResult} value={inputState.age.years}></Output>
 
-          <div>
-            <span className={styles['card__result--value']} data-testid="result">
-              {showBlankResult && '--'}
-              {showAgeResult && <CountingNumber endValue={inputState.age.months} />}
-            </span>
-            <span>months</span>
-          </div>
+          <Output label='months' showAgeResult={showAgeResult} value={inputState.age.months}></Output>
 
-          <div>
-            <span className={styles['card__result--value']} data-testid="result">
-              {showBlankResult && '--'}
-              {showAgeResult && <CountingNumber endValue={inputState.age.days} />}
-            </span>
-            <span>days</span>
-          </div>
+          <Output label='days' showAgeResult={showAgeResult} value={inputState.age.days}></Output>
         </div>
       </div>
     </div>

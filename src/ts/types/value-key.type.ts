@@ -1,0 +1,1 @@
+export type ValueKey = 'day' | 'month' | 'year';

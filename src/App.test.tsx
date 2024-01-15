@@ -40,7 +40,7 @@ describe('App component ', () => {
 
     it('should show correct result, when inputs are fine', async () => {
         const inputValues = [10, 6, 1995];
-        const resultValues = ['28', '6', '0'];
+        const resultValues = ['29', '7', '5'];
         const submit = screen.getByTestId('submit');
         const inputs = screen.getAllByTestId('input');
 

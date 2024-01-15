@@ -1,10 +1,11 @@
 import { IAgeState } from "./age-state.model";
+import { IDataState } from "./data-state.model";
 
 export interface IInputState {
     age: IAgeState;
     submitted: boolean;
     invalidDate: boolean;
-    day: { value: string, error: string };
-    month: { value: string, error: string };
-    year: { value: string, error: string };
+    day: IDataState;
+    month: IDataState;
+    year: IDataState;
 }
